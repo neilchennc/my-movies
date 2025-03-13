@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">My Movies</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="popular">Popular</string>
+    <string name="trending_day">Today Trending</string>
+    <string name="top_rated">Top-Rated</string>
+    <string name="error_network">Network Error.</string>
+    <string name="error">Error</string>
+    <string name="movie_overview">Overview</string>
+    <string name="movie_release_date">Released Date</string>
+    <string name="movie_genre">Genre</string>
+    <string name="movie_spoken_language">Language</string>
+    <string name="movie_rate">Rate</string>
+    <string name="movie_cast">Casts</string>
+    <string name="movie_crew">Crews</string>
+    <string name="movie_backdrop_image">Backdrop Images</string>
+    <string name="movie_video">Videos</string>
+    <string name="search_movie_placeholder">Search movies…</string>
+    <string name="person_birthday">Birthday</string>
+    <string name="person_deathday">Deathday</string>
+    <string name="person_gender_not_set">Not Set</string>
+    <string name="person_gender_female">Female</string>
+    <string name="person_gender_male">Male</string>
+    <string name="person_gender_non_binary">Non-binary</string>
+    <string name="person_gender">Gender</string>
+    <string name="person_place_of_birth">Place of birth</string>
+    <string name="person_images">Images</string>
+    <string name="person_cast_movie">Cast Movies</string>
+    <string name="person_crew_movie">Crew Movies</string>
+    <string name="person_biography">Biography</string>
+</resources>

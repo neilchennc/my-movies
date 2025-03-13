@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Movies</string>
+    <string name="now_playing">上映中</string>
+    <string name="upcoming">即將上映</string>
+    <string name="popular">熱門</string>
+    <string name="trending_day">今日趨勢</string>
+    <string name="top_rated">高評分</string>
+    <string name="error_network">網路錯誤</string>
+    <string name="error">錯誤</string>
+    <string name="movie_overview">概要</string>
+    <string name="movie_release_date">上映日期</string>
+    <string name="movie_genre">分類</string>
+    <string name="movie_spoken_language">語言</string>
+    <string name="movie_rate">評分</string>
+    <string name="movie_cast">卡司</string>
+    <string name="movie_crew">劇組</string>
+    <string name="movie_backdrop_image">背景圖片</string>
+    <string name="movie_video">影片</string>
+    <string name="search_movie_placeholder">搜尋電影…</string>
+    <string name="person_birthday">出生於</string>
+    <string name="person_deathday">死亡於</string>
+    <string name="person_gender_not_set">未設定</string>
+    <string name="person_gender_female">女</string>
+    <string name="person_gender_male">男</string>
+    <string name="person_gender_non_binary">非二元性別</string>
+    <string name="person_gender">性別</string>
+    <string name="person_place_of_birth">出生地</string>
+    <string name="person_images">圖片</string>
+    <string name="person_cast_movie">飾演電影</string>
+    <string name="person_crew_movie">參與劇組</string>
+    <string name="person_biography">傳記</string>
+</resources>

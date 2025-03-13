@@ -1,0 +1,79 @@
+package tw.neilchen.sample.mymovies.di
+
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import tw.neilchen.sample.mymovies.network.AuthInterceptor
+import tw.neilchen.sample.mymovies.network.TmdbApiService
+import tw.neilchen.sample.mymovies.repository.MoviesRepository
+import tw.neilchen.sample.mymovies.repository.PreferencesRepository
+import tw.neilchen.sample.mymovies.repository.TmdbMoviesRepository
+import tw.neilchen.sample.mymovies.repository.UserPreferencesRepository
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object AppModule {
+
+    private const val BASE_URL = "https://api.themoviedb.org/3/"
+
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("user")
+
+    @Singleton
+    @Provides
+    fun provideTmdbService(retrofit: Retrofit): TmdbApiService {
+        return retrofit.create(TmdbApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(interceptor: Interceptor): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideInterceptor(): Interceptor {
+        return AuthInterceptor()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMoviesRepository(service: TmdbApiService): MoviesRepository {
+        return TmdbMoviesRepository(service)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
+        return context.dataStore
+    }
+
+    @Provides
+    @Singleton
+    fun providePreferencesRepository(dataStore: DataStore<Preferences>): PreferencesRepository {
+        return UserPreferencesRepository(dataStore)
+    }
+}
