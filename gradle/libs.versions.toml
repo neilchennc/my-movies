@@ -19,6 +19,7 @@ retrofit = "2.11.0"
 hilt = "2.55"
 timber = "5.0.1"
 zoomable = "2.3.0"
+ksp = "2.1.0-1.0.29"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -55,4 +56,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref ="hilt" }
-kapt = { id = "kotlin-kapt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}

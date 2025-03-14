@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
-    alias(libs.plugins.kapt)
+    alias(libs.plugins.ksp)
     kotlin("plugin.serialization") version "2.1.10"
 }
 
@@ -50,10 +50,6 @@ android {
         compose = true
         buildConfig = true
     }
-
-    kapt {
-        correctErrorTypes = true
-    }
 }
 
 dependencies {
@@ -77,7 +73,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     implementation(libs.timber)
     implementation(libs.zoomable)
     testImplementation(libs.junit)
