@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
 import tw.neilchen.sample.mymovies.repository.PreferencesRepository
 import tw.neilchen.sample.mymovies.ui.MyMoviesApp
@@ -40,10 +39,4 @@ fun CheckAndUpdateLocale(preferences: PreferencesRepository) {
             preferences.updateLanguageTag(currentLanguageTag)
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MyMoviesApp()
 }

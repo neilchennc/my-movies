@@ -20,7 +20,6 @@ import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asComposePath
-import androidx.compose.ui.graphics.drawscope.DrawStyle
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.layout.ContentScale
@@ -151,7 +150,7 @@ fun VideoPlayImage(
                     centerX = size.width / 2,
                     centerY = size.height / 2,
                     rounding = CornerRounding(
-                        size.minDimension / 10f,
+                        radius = size.minDimension / 10,
                         smoothing = 0.1f
                     )
                 )

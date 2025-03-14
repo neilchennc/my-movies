@@ -1,8 +1,14 @@
 package tw.neilchen.sample.mymovies.ui.common
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,17 +23,29 @@ fun ErrorApiResponseContent(
     throwable: Throwable,
     modifier: Modifier = Modifier
 ) {
-    // TODO: Add icon?
-    if (throwable is IOException || throwable is HttpException) {
-        Text(
-            text = stringResource(R.string.error_network),
-            modifier = modifier
+    Column(modifier = modifier) {
+        Icon(
+            imageVector = Icons.Rounded.Warning,
+            contentDescription = "Error Icon",
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .size(48.dp)
         )
-    } else {
-        Text(
-            text = "${stringResource(R.string.error)}: ${throwable.localizedMessage}",
-            modifier = modifier
-        )
+        when (throwable) {
+            is IOException, is HttpException -> {
+                Text(
+                    text = stringResource(R.string.error_network),
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+            }
+
+            else -> {
+                Text(
+                    text = "${stringResource(R.string.error)}: ${throwable.localizedMessage}",
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+            }
+        }
     }
 }
 

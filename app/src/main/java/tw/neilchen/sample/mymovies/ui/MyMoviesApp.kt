@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
@@ -50,7 +51,7 @@ import tw.neilchen.sample.mymovies.ui.screen.PersonDetailScreen
 import tw.neilchen.sample.mymovies.ui.screen.SearchMoviesScreen
 import tw.neilchen.sample.mymovies.ui.theme.MyMoviesTheme
 
-sealed interface Routes {
+data object Routes {
     @Serializable
     object Home
 
@@ -207,7 +208,9 @@ fun MyMoviesNavHost(
             ImagesPagerScreen(
                 images = imagesPager.images,
                 clickedIndex = imagesPager.clickedIndex,
-                onBackClick = { navController.navigateUp() }
+                onBackClick = {
+                    navController.navigateUp()
+                }
             )
         }
 
@@ -242,4 +245,21 @@ private fun customEnterTransaction(): EnterTransition {
 private fun customExitTransaction(): ExitTransition {
     //return ExitTransition.None
     return fadeOut(animationSpec = tween(durationMillis = 150))
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+private fun TopAppBarPreview() {
+    MyMoviesTheme {
+        MyMoviesTopAppBar(
+            canNavigateBack = true,
+            showSearchIcon = true,
+            scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
+            onNavigateUp = {},
+            onNavigateHome = {},
+            onSearchClick = {},
+            modifier = Modifier
+        )
+    }
 }
