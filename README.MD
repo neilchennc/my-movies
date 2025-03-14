@@ -16,6 +16,8 @@ Before build the project, you have to register [TMDB](https://www.themoviedb.org
 
 > *In build.gradle.kts file, Replace **YOUR_TMDB_ACCESS_TOKEN** with yor access token.*
 
+Alternatively, you can download latest apk: [my-movies-v1.0.apk](https://github.com/neilchennc/my-movies/releases/download/v1.0/my-movies-v1.0.apk)
+
 ## Architecture
 
 ![Architecture](images/my_movies_architecture.png)
