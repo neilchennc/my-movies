@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -20,11 +22,10 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField(
-            type = "String",
-            name = "TMDB_ACCESS_TOKEN",
-            value = "\"YOUR_TMDB_ACCESS_TOKEN\"",
-        )
+        // Read TMDB access token from local.properties file
+        gradleLocalProperties(rootDir, providers).getProperty("tmdb.access_token").also {
+            buildConfigField(type = "String", name = "TMDB_ACCESS_TOKEN", value = it)
+        }
     }
 
     buildTypes {

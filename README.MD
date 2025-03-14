@@ -12,9 +12,13 @@ The language of the movie data from the TMDB server depends on your device's set
 
 ## Build
 
-Before build the project, you have to register [TMDB](https://www.themoviedb.org/) for an [API key](https://www.themoviedb.org/settings/api), and replace with your access token in **app/build.gradle.kts** file.
+Before building the project, you have to register on [TMDB](https://www.themoviedb.org/) for an [API key](https://www.themoviedb.org/settings/api), and you will find an API access token in your account settings page.
 
-> *In build.gradle.kts file, Replace **YOUR_TMDB_ACCESS_TOKEN** with yor access token.*
+After that, add the following line into **local.properties** file, and replace with your TMDB access token:
+
+```properties
+tmdb.access_token="YOUR_TMDB_ACCESS_TOKEN"
+```
 
 Alternatively, you can download latest apk: [my-movies-v1.0.apk](https://github.com/neilchennc/my-movies/releases/download/v1.0/my-movies-v1.0.apk)
 
