@@ -2,7 +2,7 @@
 
 An Android app sample with Jetpack Compose in MVVM architecture. This app fetches movie data from [The Movie Database](https://www.themoviedb.org/) (a.k.a. [TMDB](https://www.themoviedb.org/)) API and displays movies information.
 
-![Screenshot Overview](images/screenshot_overview.webp)
+![Screenshot Overview](images/screenshot_overview.png)
 
 ## Features
 
