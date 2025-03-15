@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,10 +22,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import net.engawapg.lib.zoomable.rememberZoomState
 import net.engawapg.lib.zoomable.zoomable
+import tw.neilchen.sample.mymovies.ui.common.CircularProgressLoading
+import tw.neilchen.sample.mymovies.ui.common.ErrorLoadingImageContent
 import tw.neilchen.sample.mymovies.ui.theme.MyMoviesTheme
 
 @Composable
@@ -79,12 +82,31 @@ fun ImagePagerItem(
     modifier: Modifier = Modifier
 ) {
     val zoomState = rememberZoomState()
-    AsyncImage(
+    SubcomposeAsyncImage(
         model = ImageRequest.Builder(context = LocalContext.current)
             .data(imageUrl)
             .build(),
         contentDescription = imageUrl,
         contentScale = ContentScale.Fit,
+        loading = {
+            Box {
+                CircularProgressLoading(
+                    modifier = Modifier
+                        .size(64.dp)
+                        .align(Alignment.Center)
+                )
+            }
+        },
+        error = {
+            Box {
+                ErrorLoadingImageContent(
+                    throwable = it.result.throwable,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(16.dp)
+                )
+            }
+        },
         modifier = modifier.zoomable(zoomState)
     )
 }

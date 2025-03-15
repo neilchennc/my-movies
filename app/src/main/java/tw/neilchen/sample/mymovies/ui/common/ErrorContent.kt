@@ -49,9 +49,29 @@ fun ErrorApiResponseContent(
     }
 }
 
+@Composable
+fun ErrorLoadingImageContent(
+    throwable: Throwable,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        Icon(
+            imageVector = Icons.Rounded.Warning,
+            contentDescription = "Error Icon",
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .size(48.dp)
+        )
+        Text(
+            text = "${stringResource(R.string.failed_loading_image)}: ${throwable.localizedMessage}",
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
+    }
+}
+
 @Preview
 @Composable
-private fun NetworkErrorPreview() {
+private fun ApiNetworkErrorPreview() {
     MyMoviesTheme {
         ErrorApiResponseContent(
             throwable = IOException(""),
@@ -62,10 +82,21 @@ private fun NetworkErrorPreview() {
 
 @Preview
 @Composable
-private fun UnknownThrowablePreview() {
+private fun ApiUnknownThrowablePreview() {
     MyMoviesTheme {
         ErrorApiResponseContent(
             throwable = Throwable("Unknown Error"),
+            modifier = Modifier.padding(16.dp)
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun ImageErrorPreview() {
+    MyMoviesTheme {
+        ErrorLoadingImageContent(
+            throwable = IOException("HTTP 404"),
             modifier = Modifier.padding(16.dp)
         )
     }

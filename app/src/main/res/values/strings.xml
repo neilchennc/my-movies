@@ -29,4 +29,5 @@
     <string name="person_cast_movie">Cast Movies</string>
     <string name="person_crew_movie">Crew Movies</string>
     <string name="person_biography">Biography</string>
+    <string name="failed_loading_image">Failed loading image</string>
 </resources>
