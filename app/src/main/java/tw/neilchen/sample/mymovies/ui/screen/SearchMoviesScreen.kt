@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -145,12 +146,16 @@ fun SearchResultContent(
     onMovieClick: (movie: Movie) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val gridState = rememberLazyGridState()
+
     // First load
     when (movies.loadState.refresh) {
-        is LoadState.NotLoading -> {
-        }
+        is LoadState.NotLoading -> {}
 
         is LoadState.Loading -> {
+            LaunchedEffect(Unit) {
+                gridState.scrollToItem(0)
+            }
             Box(modifier = modifier) {
                 CircularProgressLoading(
                     modifier = Modifier.align(Alignment.Center)
@@ -167,6 +172,7 @@ fun SearchResultContent(
     }
 
     LazyVerticalGrid(
+        state = gridState,
         columns = GridCells.Adaptive(minSize = 120.dp),
         modifier = modifier
     ) {
