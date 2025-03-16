@@ -20,7 +20,7 @@ After that, add the following line into **local.properties** file, and replace w
 tmdb.access_token="YOUR_TMDB_ACCESS_TOKEN"
 ```
 
-Alternatively, you can download latest apk: [my-movies-v1.0.apk](https://github.com/neilchennc/my-movies/releases/download/v1.0/my-movies-v1.0.apk)
+Alternatively, you can download the latest released apk: [my-movies-v1.0.apk](https://github.com/neilchennc/my-movies/releases/download/v1.0/my-movies-v1.0.apk)
 
 ## Architecture
 

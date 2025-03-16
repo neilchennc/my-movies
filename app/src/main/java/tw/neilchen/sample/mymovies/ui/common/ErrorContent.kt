@@ -32,9 +32,16 @@ fun ErrorApiResponseContent(
                 .size(48.dp)
         )
         when (throwable) {
-            is IOException, is HttpException -> {
+            is IOException -> {
                 Text(
                     text = stringResource(R.string.error_network),
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+            }
+
+            is HttpException -> {
+                Text(
+                    text = "${stringResource(R.string.error_network)}: HTTP ${throwable.code()}",
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }
