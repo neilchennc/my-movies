@@ -2,6 +2,7 @@ package tw.neilchen.sample.mymovies.ui.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -12,8 +13,12 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -38,9 +43,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import timber.log.Timber
 import tw.neilchen.sample.mymovies.R
 import tw.neilchen.sample.mymovies.data.Movie
 import tw.neilchen.sample.mymovies.ui.common.CircularProgressLoading
@@ -56,12 +63,17 @@ fun SearchMoviesScreen(
     viewModel: SearchMoviesViewModel = hiltViewModel(),
 ) {
     val movies = viewModel.resultFlow.collectAsLazyPagingItems()
+    val searchKeywords by viewModel.keywordsFlow.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier.fillMaxSize()
     ) {
         SearchBarContent(
-            onSearch = { keyword -> viewModel.searchMovies(keyword) },
+            suggestions = searchKeywords,
+            onSearch = { keyword ->
+                viewModel.insertSearchKeyword(keyword)
+                viewModel.searchMovies(keyword)
+            },
             modifier = Modifier.fillMaxWidth()
         )
         SearchResultContent(
@@ -72,8 +84,10 @@ fun SearchMoviesScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBarContent(
+    suggestions: List<String>,
     onSearch: (keyword: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -81,63 +95,113 @@ fun SearchBarContent(
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     var keyword by rememberSaveable { mutableStateOf("") }
-    var requestFocusFirst by rememberSaveable { mutableStateOf(true) }
+    var firstLaunched by rememberSaveable { mutableStateOf(true) }
+    var expanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        if (requestFocusFirst) {
-            requestFocusFirst = false
-            focusRequester.requestFocus()
+        if (firstLaunched) {
+            firstLaunched = false
+            expanded = true
+            //delay(1000)
+            //focusRequester.requestFocus()
         }
     }
 
-    TextField(
-        value = keyword,
-        placeholder = { Text(stringResource(R.string.search_movie_placeholder)) },
-        onValueChange = { keyword = it },
-        maxLines = 1,
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Search,
-            keyboardType = KeyboardType.Text
-        ),
-        keyboardActions = KeyboardActions(
-            onSearch = {
-                focusManager.clearFocus()
-                onSearch(keyword)
-            }
-        ),
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = {
+            Timber.d("onExpandedChange, ${expanded}, $it")
+//            expanded = !expanded
+            expanded = it
+        },
         modifier = modifier
-            .focusRequester(focusRequester)
-            .onFocusChanged {
-                if (it.isFocused) {
-                    keyboardController?.show()
-                } else {
-                    keyboardController?.hide()
-                }
+    ) {
+        TextField(
+            value = keyword,
+            placeholder = { Text(stringResource(R.string.search_movie_placeholder)) },
+            onValueChange = {
+                keyword = it
+                Timber.d("onValueChange, ${expanded}, $it")
+//                expanded = true
             },
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.Transparent,
-            unfocusedContainerColor = Color.Transparent,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Search,
+                keyboardType = KeyboardType.Text
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    focusManager.clearFocus()
+                    expanded = false
+                    onSearch(keyword)
+                }
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusRequester(focusRequester)
+                .menuAnchor(
+                    type = MenuAnchorType.PrimaryEditable,
+                    enabled = true
+                )
+                .onFocusChanged {
+                    if (it.isFocused) {
+                        //expanded = true
+                        keyboardController?.show()
+                    } else {
+                        //expanded = false
+                        keyboardController?.hide()
+                    }
+                },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
 //            focusedPlaceholderColor = Color(0x7F_00_00_00),
 //            unfocusedPlaceholderColor = Color(0x7F_00_00_00)
 //            selectionColors = TextSelectionColors(
 //                handleColor = MaterialTheme.colorScheme.secondary,
 //                backgroundColor = MaterialTheme.colorScheme.onPrimary
 //            ),
-        ),
-        trailingIcon = {
-            IconButton(
-                onClick = {
-                    focusManager.clearFocus()
-                    onSearch(keyword)
+            ),
+            trailingIcon = {
+                IconButton(
+                    onClick = {
+                        focusManager.clearFocus()
+                        expanded = false
+                        onSearch(keyword)
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = "Search"
+                    )
                 }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "Search"
-                )
             }
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = {
+                Timber.d("onDismissRequest, expanded=${expanded}")
+                expanded = false
+            }
+        ) {
+            suggestions
+                .filter { it.contains(keyword, ignoreCase = true) }
+                .forEach { suggestion ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(suggestion)
+                        },
+                        onClick = {
+                            keyword = suggestion
+                            expanded = false
+                            focusManager.clearFocus()
+                            onSearch(suggestion)
+                        },
+                        contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
+                    )
+                }
         }
-    )
+    }
 }
 
 @Composable
@@ -214,6 +278,7 @@ fun SearchResultContent(
 private fun SearchContentPreview() {
     MyMoviesTheme {
         SearchBarContent(
+            suggestions = emptyList(),
             onSearch = { _ -> }
         )
     }

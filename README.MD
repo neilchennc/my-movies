@@ -52,6 +52,8 @@ Latest released apk: [my-movies-v1.0.1.apk](https://github.com/neilchennc/my-mov
 
 - **DataStore** - Store user's preferences.
 
+- **Room** - SQLite database library.
+
 - **Kotlin coroutines and flows**
 
 - **Timber** - A tiny log library.

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,8 +14,12 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import tw.neilchen.sample.mymovies.database.AppDatabase
+import tw.neilchen.sample.mymovies.database.SearchKeywordDao
 import tw.neilchen.sample.mymovies.network.AuthInterceptor
 import tw.neilchen.sample.mymovies.network.TmdbApiService
+import tw.neilchen.sample.mymovies.repository.AppDatabaseRepository
+import tw.neilchen.sample.mymovies.repository.DatabaseRepository
 import tw.neilchen.sample.mymovies.repository.MoviesRepository
 import tw.neilchen.sample.mymovies.repository.PreferencesRepository
 import tw.neilchen.sample.mymovies.repository.TmdbMoviesRepository
@@ -75,5 +80,25 @@ object AppModule {
     @Singleton
     fun providePreferencesRepository(dataStore: DataStore<Preferences>): PreferencesRepository {
         return UserPreferencesRepository(dataStore)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java, "app_database")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchKeywordDao(appDatabase: AppDatabase): SearchKeywordDao {
+        return appDatabase.searchKeywordDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppDatabaseRepository(searchKeywordDao: SearchKeywordDao): DatabaseRepository {
+        return AppDatabaseRepository(searchKeywordDao)
     }
 }
