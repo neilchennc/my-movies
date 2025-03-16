@@ -6,7 +6,7 @@ An Android app sample with Jetpack Compose in MVVM architecture. This app fetche
 
 ## Features
 
-Browse movies (trending, top-rateed, popular...), posters, backdrops, people's profile, images, and search for movies.
+Browse movies (trending, top-rated, popular...), posters, backdrops, people's profile, images, and search for movies.
 
 The language of the movie data from the TMDB server depends on your device's settings; therefore, the movie's content will be updated accordingly.
 
