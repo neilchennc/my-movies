@@ -36,11 +36,11 @@ Latest released apk: [my-movies-v1.0.1.apk](https://github.com/neilchennc/my-mov
 
 - **Material Design** - Color and style theming.
 
-- **Hilt** - The dependency injection.
+- **Hilt** - The dependency injection library.
 
-- **Coil** - Load images from the network.
+- **Coil** - Load images from the network library.
 
-- **Retrofit** - HTTP API requests.
+- **Retrofit** - HTTP API requests library.
 
 - **Paging library** - Load and display pages of data from a network.
 

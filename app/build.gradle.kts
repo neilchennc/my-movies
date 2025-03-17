@@ -23,9 +23,9 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // Read TMDB access token from local.properties file
-        gradleLocalProperties(rootDir, providers).getProperty("tmdb.access_token").also {
+        gradleLocalProperties(rootDir, providers).getProperty("tmdb.access_token")?.let {
             buildConfigField(type = "String", name = "TMDB_ACCESS_TOKEN", value = it)
-        }
+        } ?: throw IllegalArgumentException("TMDB access token was not found in local.properties.")
     }
 
     buildTypes {

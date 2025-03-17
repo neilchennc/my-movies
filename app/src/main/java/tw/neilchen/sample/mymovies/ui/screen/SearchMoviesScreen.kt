@@ -47,7 +47,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import timber.log.Timber
 import tw.neilchen.sample.mymovies.R
 import tw.neilchen.sample.mymovies.data.Movie
 import tw.neilchen.sample.mymovies.ui.common.CircularProgressLoading
@@ -96,34 +95,25 @@ fun SearchBarContent(
     val focusRequester = remember { FocusRequester() }
     var keyword by rememberSaveable { mutableStateOf("") }
     var firstLaunched by rememberSaveable { mutableStateOf(true) }
-    var expanded by remember { mutableStateOf(false) }
+    var dropdownMenuExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         if (firstLaunched) {
             firstLaunched = false
-            expanded = true
-            //delay(1000)
-            //focusRequester.requestFocus()
+            dropdownMenuExpanded = true
+//            focusRequester.requestFocus()
         }
     }
 
     ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = {
-            Timber.d("onExpandedChange, ${expanded}, $it")
-//            expanded = !expanded
-            expanded = it
-        },
+        expanded = dropdownMenuExpanded,
+        onExpandedChange = { dropdownMenuExpanded = it },
         modifier = modifier
     ) {
         TextField(
             value = keyword,
             placeholder = { Text(stringResource(R.string.search_movie_placeholder)) },
-            onValueChange = {
-                keyword = it
-                Timber.d("onValueChange, ${expanded}, $it")
-//                expanded = true
-            },
+            onValueChange = { keyword = it },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Search,
@@ -132,7 +122,7 @@ fun SearchBarContent(
             keyboardActions = KeyboardActions(
                 onSearch = {
                     focusManager.clearFocus()
-                    expanded = false
+                    dropdownMenuExpanded = false
                     onSearch(keyword)
                 }
             ),
@@ -145,10 +135,10 @@ fun SearchBarContent(
                 )
                 .onFocusChanged {
                     if (it.isFocused) {
-                        //expanded = true
+//                        dropdownMenuExpanded = true
                         keyboardController?.show()
                     } else {
-                        //expanded = false
+//                        dropdownMenuExpanded = false
                         keyboardController?.hide()
                     }
                 },
@@ -166,7 +156,7 @@ fun SearchBarContent(
                 IconButton(
                     onClick = {
                         focusManager.clearFocus()
-                        expanded = false
+                        dropdownMenuExpanded = false
                         onSearch(keyword)
                     }
                 ) {
@@ -177,24 +167,20 @@ fun SearchBarContent(
                 }
             }
         )
+
         ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = {
-                Timber.d("onDismissRequest, expanded=${expanded}")
-                expanded = false
-            }
+            expanded = dropdownMenuExpanded,
+            onDismissRequest = { dropdownMenuExpanded = false }
         ) {
             suggestions
                 .filter { it.contains(keyword, ignoreCase = true) }
                 .forEach { suggestion ->
                     DropdownMenuItem(
-                        text = {
-                            Text(suggestion)
-                        },
+                        text = { Text(text = suggestion) },
                         onClick = {
                             keyword = suggestion
-                            expanded = false
                             focusManager.clearFocus()
+                            dropdownMenuExpanded = false
                             onSearch(suggestion)
                         },
                         contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
