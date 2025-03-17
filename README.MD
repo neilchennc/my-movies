@@ -24,7 +24,7 @@ tmdb.access_token="YOUR_TMDB_ACCESS_TOKEN"
 
 ## Download
 
-Latest released apk: [my-movies-v1.0.1.apk](https://github.com/neilchennc/my-movies/releases/download/v1.0.1/my-movies-v1.0.1.apk)
+Latest released apk: [my-movies-v1.1.0.apk](https://github.com/neilchennc/my-movies/releases/download/v1.1.0/my-movies-v1.1.0.apk)
 
 ## Architecture
 
