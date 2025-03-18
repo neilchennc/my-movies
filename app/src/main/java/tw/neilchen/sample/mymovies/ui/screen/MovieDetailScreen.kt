@@ -2,6 +2,7 @@ package tw.neilchen.sample.mymovies.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -143,6 +144,7 @@ fun MovieDetailContent(
     modifier: Modifier = Modifier
 ) {
     Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
@@ -154,7 +156,7 @@ fun MovieDetailContent(
                 .aspectRatio(16f / 9f)
         )
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         Row(
             modifier = Modifier.padding(8.dp)
@@ -185,8 +187,6 @@ fun MovieDetailContent(
             )
         }
 
-        Spacer(modifier = Modifier.height(4.dp))
-
         if (movieDetail.tagline.isNotEmpty()) {
             Spacer(modifier = Modifier.height(4.dp))
             Text(
@@ -205,14 +205,10 @@ fun MovieDetailContent(
             modifier = Modifier.padding(start = 8.dp, end = 8.dp)
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
-
         Text(
             text = movieDetail.overview,
             modifier = Modifier.padding(start = 8.dp, end = 8.dp)
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         MovieCastsContent(
             casts = movieCredits.cast,
@@ -220,23 +216,17 @@ fun MovieDetailContent(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         MovieCrewsContent(
             crews = movieCredits.crew,
             onPersonClick = onPersonClick,
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         MovieBackdropImagesContent(
             backdrops = movieImages.backdrops,
             onImageClick = onImageClick,
             modifier = Modifier.fillMaxWidth()
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         MovieVideosContent(
             videos = movieVideos.results,

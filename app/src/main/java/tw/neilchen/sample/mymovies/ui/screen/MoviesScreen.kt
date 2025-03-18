@@ -1,11 +1,10 @@
 package tw.neilchen.sample.mymovies.ui.screen
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -107,6 +106,7 @@ fun MoviesContent(
     modifier: Modifier = Modifier,
 ) {
     Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
         CommonBaseMovieList(
@@ -115,15 +115,11 @@ fun MoviesContent(
             onMovieClick = onMovieClick
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         CommonBaseMovieList(
             title = stringResource(R.string.now_playing),
             movies = nowPlayingMovies,
             onMovieClick = onMovieClick
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         CommonBaseMovieList(
             title = stringResource(R.string.upcoming),
@@ -131,15 +127,11 @@ fun MoviesContent(
             onMovieClick = onMovieClick
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         CommonBaseMovieList(
             title = stringResource(R.string.popular),
             movies = popularMovies,
             onMovieClick = onMovieClick
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         CommonBaseMovieList(
             title = stringResource(R.string.top_rated),

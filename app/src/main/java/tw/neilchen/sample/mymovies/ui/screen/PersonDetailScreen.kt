@@ -2,6 +2,7 @@ package tw.neilchen.sample.mymovies.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -125,6 +126,7 @@ fun PersonDetailContent(
     modifier: Modifier = Modifier
 ) {
     Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
@@ -134,14 +136,10 @@ fun PersonDetailContent(
             modifier = Modifier.padding(8.dp)
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         PersonBiographyContent(
             biography = personDetail.biography,
             modifier = Modifier
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         ProfileImagesContent(
             personImages = personImages,
@@ -149,15 +147,11 @@ fun PersonDetailContent(
             modifier = Modifier
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         PersonCastMovieList(
             movies = personMovieCredits.cast,
             onMovieClick = onMovieClick,
             modifier = Modifier
         )
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         PersonCrewMovieList(
             movies = personMovieCredits.crew,
