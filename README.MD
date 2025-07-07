@@ -12,7 +12,7 @@ The language of the movie data from the TMDB server depends on your device's set
 
 ## Download
 
-Latest released apk: [my-movies-v1.1.0.apk](https://github.com/neilchennc/my-movies/releases/download/v1.1.0/my-movies-v1.1.0.apk)
+Latest released apk: [my-movies-v1.2.0.apk](https://github.com/neilchennc/my-movies/releases/download/v1.2.0/my-movies-v1.2.0.apk)
 
 ## Build
 
