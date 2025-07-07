@@ -39,8 +39,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import tw.neilchen.sample.mymovies.R
 import tw.neilchen.sample.mymovies.data.Backdrop
 import tw.neilchen.sample.mymovies.data.Cast

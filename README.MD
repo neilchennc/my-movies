@@ -10,6 +10,10 @@ Browse movies (trending, top-rated, popular...), posters, backdrops, people's pr
 
 The language of the movie data from the TMDB server depends on your device's settings; therefore, the movie's content will be updated accordingly.
 
+## Download
+
+Latest released apk: [my-movies-v1.1.0.apk](https://github.com/neilchennc/my-movies/releases/download/v1.1.0/my-movies-v1.1.0.apk)
+
 ## Build
 
 Before building the project, you have to register on [TMDB](https://www.themoviedb.org/) for an [API key](https://www.themoviedb.org/settings/api), and you will find an API access token in your account settings page.
@@ -22,9 +26,7 @@ tmdb.access_token="YOUR_TMDB_ACCESS_TOKEN"
 
 > *Note: The local.properties file is created by Android Studio IDE when you open the project.*
 
-## Download
-
-Latest released apk: [my-movies-v1.1.0.apk](https://github.com/neilchennc/my-movies/releases/download/v1.1.0/my-movies-v1.1.0.apk)
+> *Recommended upgrading to the latest stable Android Studio and enabling K2 mode.*
 
 ## Architecture
 

@@ -32,8 +32,9 @@ import androidx.graphics.shapes.CornerRounding
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.star
 import androidx.graphics.shapes.toPath
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import tw.neilchen.sample.mymovies.data.Dummy
 import tw.neilchen.sample.mymovies.data.Movie
 import tw.neilchen.sample.mymovies.data.toFirstDecimalPlace
