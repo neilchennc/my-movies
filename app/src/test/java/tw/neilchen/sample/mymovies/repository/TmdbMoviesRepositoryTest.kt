@@ -1,6 +1,7 @@
 package tw.neilchen.sample.mymovies.repository
 
 import app.cash.turbine.test
+import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -50,9 +51,9 @@ class TmdbMoviesRepositoryTest {
         val result = tmdb.getNowPlayingMovies(0, "").first()
         assertEquals(fakeMovieList, result)
 
-        // Turbine
+        // Turbine + Truth
         tmdb.getNowPlayingMovies(0, "").test {
-            assertEquals(fakeMovieList, awaitItem())
+            assertThat(awaitItem()).isEqualTo(fakeMovieList)
             awaitComplete()
         }
     }
@@ -64,7 +65,7 @@ class TmdbMoviesRepositoryTest {
         val tmdb = TmdbMoviesRepository(apiService)
 
         tmdb.getNowPlayingMovies(0, "").test {
-            assertEquals("Failed", awaitError().message)
+            assertThat(awaitError().message).isEqualTo("Failed")
         }
     }
 
@@ -82,7 +83,7 @@ class TmdbMoviesRepositoryTest {
 
         tmdb.getNowPlayingMovies(0, "").test {
             val error = awaitError() as HttpException
-            assertEquals(500, error.response()!!.code())
+            assertThat(error.response()!!.code()).isEqualTo(500)
         }
     }
 }
