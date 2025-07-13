@@ -85,6 +85,7 @@ dependencies {
     implementation(libs.timber)
     implementation(libs.zoomable)
 
+    testImplementation(libs.androidx.paging.testing)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)

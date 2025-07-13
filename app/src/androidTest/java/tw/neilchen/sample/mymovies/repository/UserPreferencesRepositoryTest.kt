@@ -22,7 +22,7 @@ class UserPreferencesRepositoryTest {
     private lateinit var repository: UserPreferencesRepository
 
     @Before
-    fun setup() {
+    fun setUp() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         dataStore = PreferenceDataStoreFactory.create(
             //scope = testCoroutineScope,
@@ -34,7 +34,7 @@ class UserPreferencesRepositoryTest {
     }
 
     @After
-    fun teardown() = runTest {
+    fun tearDown() = runTest {
         dataStore.edit { it.clear() }
     }
 

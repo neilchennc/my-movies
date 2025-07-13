@@ -26,12 +26,11 @@ import tw.neilchen.sample.mymovies.network.TmdbApiService
 @OptIn(ExperimentalCoroutinesApi::class)
 class TmdbMoviesRepositoryTest {
 
-    private val dispatcher = StandardTestDispatcher()
     private val apiService = mockk<TmdbApiService>(relaxed = true)
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(dispatcher)
+        Dispatchers.setMain(StandardTestDispatcher())
     }
 
     @After

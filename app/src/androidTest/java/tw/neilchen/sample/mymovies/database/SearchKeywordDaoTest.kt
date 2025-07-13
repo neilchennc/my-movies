@@ -24,7 +24,7 @@ class SearchKeywordDaoTest {
     private lateinit var searchKeywordDao: SearchKeywordDao
 
     @Before
-    fun setup() {
+    fun setUp() {
         database = Room.inMemoryDatabaseBuilder(
             InstrumentationRegistry.getInstrumentation().targetContext,
             AppDatabase::class.java
@@ -33,7 +33,7 @@ class SearchKeywordDaoTest {
     }
 
     @After
-    fun teardown() {
+    fun tearDown() {
         database.close()
     }
 
