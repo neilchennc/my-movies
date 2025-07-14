@@ -61,3 +61,9 @@ tmdb.access_token="YOUR_TMDB_ACCESS_TOKEN"
 - **Timber** - A tiny log library.
 
 - **Zoomable** - Compose multiplatform library that enables the content to be zoomable by gestures.
+
+- **MockK** - Mocking library for Kotlin.
+
+- **Truth** - Fluent assertions for testing.
+
+- **Turbine** - Testing library for Kotlin Flows.
