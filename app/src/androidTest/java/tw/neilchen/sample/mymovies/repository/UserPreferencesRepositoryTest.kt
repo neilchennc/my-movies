@@ -8,7 +8,7 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import app.cash.turbine.test
-import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -42,7 +42,7 @@ class UserPreferencesRepositoryTest {
     fun setLanguageTag_isCorrect() = runTest {
         // Check default value is empty
         repository.languageTag.test {
-            Truth.assertThat(awaitItem()).isEmpty()
+            assertThat(awaitItem()).isEmpty()
         }
 
         // Set language tag
@@ -50,7 +50,7 @@ class UserPreferencesRepositoryTest {
 
         // Check language tag
         repository.languageTag.test {
-            Truth.assertThat(awaitItem()).isEqualTo("zh-TW")
+            assertThat(awaitItem()).isEqualTo("zh-TW")
         }
     }
 }

@@ -4,7 +4,6 @@ import androidx.paging.PagingSource
 import com.google.common.truth.Truth.assertThat
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaType
@@ -37,11 +36,29 @@ class MoviesPagingSourceTest {
     @Test
     fun loadPagingData_emptyQuery() = runTest {
         val movieList = MovieList(Dates("", ""), 1, 1, 0, emptyList())
-        val expected = PagingSource.LoadResult.Page(emptyList<Movie>(), null, null)
+        val expected = PagingSource.LoadResult.Page(emptyList(), null, null)
+        val pagingSource = MoviesPagingSource(service, "", "")
 
         coEvery { service.searchMovies(any(), any(), any()) } returns movieList
 
-        val pagingSource = MoviesPagingSource(service, "", "")
+        val result = pagingSource.load(
+            PagingSource.LoadParams.Refresh(
+                key = null,
+                loadSize = 1,
+                placeholdersEnabled = false
+            )
+        )
+
+        assertThat(result).isEqualTo(expected)
+    }
+
+    @Test
+    fun loadPagingData_emptyList() = runTest {
+        val movieList = MovieList(Dates("", ""), 1, 1, 0, emptyList())
+        val expected = PagingSource.LoadResult.Page(emptyList(), null, null)
+        val pagingSource = MoviesPagingSource(service, "Hello World", "")
+
+        coEvery { service.searchMovies(any(), any(), any()) } returns movieList
 
         val result = pagingSource.load(
             PagingSource.LoadParams.Refresh(
@@ -60,10 +77,9 @@ class MoviesPagingSourceTest {
         val movies = listOf(FakeData.movie)
         val movieList = MovieList(Dates("", ""), currentPage, 20, movies.size, movies)
         val expected = PagingSource.LoadResult.Page(movies, null, currentPage + 1)
+        val pagingSource = MoviesPagingSource(service, "Hello World", "")
 
         coEvery { service.searchMovies(any(), any(), any()) } returns movieList
-
-        val pagingSource = MoviesPagingSource(service, "123", "")
 
         val result = pagingSource.load(
             PagingSource.LoadParams.Refresh(
@@ -86,10 +102,9 @@ class MoviesPagingSourceTest {
             )
         )
         val expected = PagingSource.LoadResult.Error<Int, Movie>(exception)
+        val pagingSource = MoviesPagingSource(service, "Hello World", "")
 
         coEvery { service.searchMovies(any(), any(), any()) } throws exception
-
-        val pagingSource = MoviesPagingSource(service, "123", "")
 
         val result = pagingSource.load(
             PagingSource.LoadParams.Refresh(

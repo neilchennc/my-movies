@@ -42,7 +42,7 @@ class TmdbMoviesRepositoryTest {
     fun getNowPlayingMovies_success() = runTest {
         val fakeMovieList = MovieList(Dates("", ""), 1, 1, 0, emptyList())
 
-        coEvery { apiService.getNowPlayingMovies(0, "") } returns fakeMovieList
+        coEvery { apiService.getNowPlayingMovies(any(), any()) } returns fakeMovieList
 
         val tmdb = TmdbMoviesRepository(apiService)
 
@@ -59,7 +59,7 @@ class TmdbMoviesRepositoryTest {
 
     @Test
     fun getNowPlayingMovies_failed() = runTest {
-        coEvery { apiService.getNowPlayingMovies(0, "") } throws Exception("Failed")
+        coEvery { apiService.getNowPlayingMovies(any(), any()) } throws Exception("Failed")
 
         val tmdb = TmdbMoviesRepository(apiService)
 
@@ -70,7 +70,7 @@ class TmdbMoviesRepositoryTest {
 
     @Test
     fun getNowPlayingMovies_serverError() = runTest {
-        coEvery { apiService.getNowPlayingMovies(0, "") } throws
+        coEvery { apiService.getNowPlayingMovies(any(), any()) } throws
                 HttpException(
                     Response.error<Any>(
                         500,

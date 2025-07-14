@@ -57,11 +57,11 @@ class MoviesViewModelTest {
         val movieList = MovieList(Dates("", ""), 1, 1, 0, listOf(FakeData.movie))
 
         every { preferencesRepository.languageTag } returns flow { emit("zh-TW") }
-        every { moviesRepository.getTrendingMoviesByDay(1, "") } returns flow { emit(movieList) }
-        every { moviesRepository.getNowPlayingMovies(1, "") } returns flow { emit(movieList) }
-        every { moviesRepository.getUpcomingMovies(1, "") } returns flow { emit(movieList) }
-        every { moviesRepository.getPopularMovies(1, "") } returns flow { emit(movieList) }
-        every { moviesRepository.getTopRatedMovies(1, "") } returns flow { emit(movieList) }
+        every { moviesRepository.getTrendingMoviesByDay(any(), any()) } returns flow { emit(movieList) }
+        every { moviesRepository.getNowPlayingMovies(any(), any()) } returns flow { emit(movieList) }
+        every { moviesRepository.getUpcomingMovies(any(), any()) } returns flow { emit(movieList) }
+        every { moviesRepository.getPopularMovies(any(), any()) } returns flow { emit(movieList) }
+        every { moviesRepository.getTopRatedMovies(any(), any()) } returns flow { emit(movieList) }
 
         viewModel.uiState.test {
             assertThat(awaitItem()).isEqualTo(MoviesUiState.Loading)
@@ -87,11 +87,11 @@ class MoviesViewModelTest {
         )
 
         every { preferencesRepository.languageTag } returns flow { emit("") }
-        every { moviesRepository.getTrendingMoviesByDay(1, "") } returns flow { throw exception }
-        every { moviesRepository.getNowPlayingMovies(1, "") } returns flow { throw exception }
-        every { moviesRepository.getUpcomingMovies(1, "") } returns flow { throw exception }
-        every { moviesRepository.getPopularMovies(1, "") } returns flow { throw exception }
-        every { moviesRepository.getTopRatedMovies(1, "") } returns flow { throw exception }
+        every { moviesRepository.getTrendingMoviesByDay(any(), any()) } returns flow { throw exception }
+        every { moviesRepository.getNowPlayingMovies(any(), any()) } returns flow { throw exception }
+        every { moviesRepository.getUpcomingMovies(any(), any()) } returns flow { throw exception }
+        every { moviesRepository.getPopularMovies(any(), any()) } returns flow { throw exception }
+        every { moviesRepository.getTopRatedMovies(any(), any()) } returns flow { throw exception }
 
         viewModel.uiState.test {
             assertThat(awaitItem()).isEqualTo(MoviesUiState.Loading)
