@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,6 +29,7 @@ import tw.neilchen.sample.mymovies.ui.common.CircularProgressLoading
 import tw.neilchen.sample.mymovies.ui.common.ErrorApiResponseContent
 import tw.neilchen.sample.mymovies.ui.common.MovieItem
 import tw.neilchen.sample.mymovies.ui.theme.MyMoviesTheme
+import tw.neilchen.sample.mymovies.ui.util.TestTags
 import tw.neilchen.sample.mymovies.ui.viewmodel.MoviesUiState
 import tw.neilchen.sample.mymovies.ui.viewmodel.MoviesViewModel
 
@@ -107,7 +109,9 @@ fun MoviesContent(
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = modifier.verticalScroll(rememberScrollState())
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .testTag(TestTags.MY_MOVIE_LIST)
     ) {
         CommonBaseMovieList(
             title = stringResource(R.string.trending_day),

@@ -88,7 +88,7 @@ object TestAppModule {
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(context, AppDatabase::class.java, "app_database")
+        return Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
             .fallbackToDestructiveMigration(dropAllTables = true)
             .build()
     }
