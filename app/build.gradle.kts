@@ -21,7 +21,7 @@ android {
         versionCode = 1
         versionName = "1.2.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "tw.neilchen.sample.mymovies.CustomTestRunner"
 
         // Read TMDB access token from local.properties file
         gradleLocalProperties(rootDir, providers).getProperty("tmdb.access_token")?.let {
@@ -97,6 +97,7 @@ dependencies {
     androidTestImplementation(libs.androidx.room.testing)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.hilt.android.testing)
     androidTestImplementation(libs.truth)
     androidTestImplementation(libs.turbine)
 
