@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
@@ -50,6 +51,7 @@ import tw.neilchen.sample.mymovies.ui.screen.MoviesScreen
 import tw.neilchen.sample.mymovies.ui.screen.PersonDetailScreen
 import tw.neilchen.sample.mymovies.ui.screen.SearchMoviesScreen
 import tw.neilchen.sample.mymovies.ui.theme.MyMoviesTheme
+import tw.neilchen.sample.mymovies.ui.util.TestTags
 
 data object Routes {
     @Serializable
@@ -130,7 +132,10 @@ fun MyMoviesTopAppBar(
         modifier = modifier,
         navigationIcon = {
             if (canNavigateBack) {
-                IconButton(onClick = onNavigateUp) {
+                IconButton(
+                    onClick = onNavigateUp,
+                    modifier = Modifier.testTag(TestTags.NAVIGATION_ICON_BACK)
+                ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back"

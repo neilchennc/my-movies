@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,6 +30,7 @@ import net.engawapg.lib.zoomable.zoomable
 import tw.neilchen.sample.mymovies.ui.common.CircularProgressLoading
 import tw.neilchen.sample.mymovies.ui.common.ErrorLoadingImageContent
 import tw.neilchen.sample.mymovies.ui.theme.MyMoviesTheme
+import tw.neilchen.sample.mymovies.ui.util.TestTags
 
 @Composable
 fun ImagesPagerScreen(
@@ -58,6 +60,7 @@ fun ImagesPagerScreen(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(start = 4.dp, top = 8.dp)
+                .testTag(TestTags.NAVIGATION_ICON_BACK)
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,

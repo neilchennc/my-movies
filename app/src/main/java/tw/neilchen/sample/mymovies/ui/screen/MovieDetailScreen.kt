@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -66,6 +67,7 @@ import tw.neilchen.sample.mymovies.ui.common.StarShape
 import tw.neilchen.sample.mymovies.ui.common.SubtitleText
 import tw.neilchen.sample.mymovies.ui.common.VideoPlayImage
 import tw.neilchen.sample.mymovies.ui.theme.MyMoviesTheme
+import tw.neilchen.sample.mymovies.ui.util.TestTags
 import tw.neilchen.sample.mymovies.ui.viewmodel.MovieDetailsUiState
 import tw.neilchen.sample.mymovies.ui.viewmodel.MovieDetailsViewModel
 
@@ -149,6 +151,7 @@ fun MovieDetailContent(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
+            .testTag(TestTags.MOVIE_DETAIL_CONTENT)
     ) {
         MovieBackdropImage(
             movieDetail = movieDetail,
@@ -185,6 +188,7 @@ fun MovieDetailContent(
                             onImageClick(images, clickedIndex)
                         }
                     )
+                    .testTag(TestTags.MOVIE_POSTER_IMAGE)
             )
         }
 
@@ -309,7 +313,9 @@ fun MovieBackdropImage(
         //placeholder = painterResource(R.drawable.loading_img),
         contentDescription = "Backdrop ${movieDetail.title}",
         contentScale = ContentScale.Crop,
-        modifier = modifier.background(Color.LightGray)
+        modifier = modifier
+            .background(Color.LightGray)
+            .testTag(TestTags.MOVIE_BACKDROP_IMAGE)
     )
 }
 
@@ -420,7 +426,7 @@ fun MovieVideosContent(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier.testTag(TestTags.MOVIE_VIDEO_CONTENT)
     ) {
         SubtitleText(
             title = stringResource(R.string.movie_video),
