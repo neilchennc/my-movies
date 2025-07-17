@@ -56,7 +56,7 @@ tmdb.access_token="YOUR_TMDB_ACCESS_TOKEN"
 
 - **Room** - SQLite database library.
 
-- **Kotlin coroutines and flows**
+- **Kotlin Coroutines and Flows**
 
 - **Timber** - A tiny log library.
 
@@ -64,7 +64,7 @@ tmdb.access_token="YOUR_TMDB_ACCESS_TOKEN"
 
 - **MockK** - Mocking library for Kotlin.
 
-- *MockWebServer* - A scriptable web server for testing HTTP clients.
+- **MockWebServer** - A scriptable web server for testing HTTP clients.
 
 - **Truth** - Fluent assertions for testing.
 
