@@ -64,6 +64,8 @@ tmdb.access_token="YOUR_TMDB_ACCESS_TOKEN"
 
 - **MockK** - Mocking library for Kotlin.
 
+- *MockWebServer* - A scriptable web server for testing HTTP clients.
+
 - **Truth** - Fluent assertions for testing.
 
 - **Turbine** - Testing library for Kotlin Flows.
