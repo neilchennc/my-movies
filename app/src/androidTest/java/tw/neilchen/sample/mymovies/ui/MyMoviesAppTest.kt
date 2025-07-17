@@ -17,13 +17,17 @@ import androidx.compose.ui.test.swipeUp
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
+import okhttp3.mockwebserver.MockWebServer
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import tw.neilchen.sample.mymovies.MainActivity
 import tw.neilchen.sample.mymovies.R
 import tw.neilchen.sample.mymovies.di.AppModule
+import tw.neilchen.sample.mymovies.dispatcher.MockServerDispatcher
 import tw.neilchen.sample.mymovies.ui.util.TestTags
+import javax.inject.Inject
 
 @HiltAndroidTest
 @UninstallModules(AppModule::class)
@@ -35,16 +39,26 @@ class MyMoviesAppTest {
     @get:Rule(order = 1)
     val composeRule = createAndroidComposeRule<MainActivity>()
 
+    @Inject
+    lateinit var mockWebServer: MockWebServer
+
     @Before
     fun setUp() {
         hiltRule.inject()
+        //mockWebServer.start(port = 8080)
+        mockWebServer.dispatcher = MockServerDispatcher()
         composeRule.activity.setContent {
             MyMoviesApp()
         }
     }
 
+    @After
+    fun tearDown() {
+        mockWebServer.shutdown()
+    }
+
     @Test
-    fun checkMoviesLit_isLoaded() {
+    fun overviewMovies_isCorrect() {
         val trendingText = composeRule.activity.getString(R.string.trending_day)
 
         with(composeRule) {
@@ -79,6 +93,25 @@ class MyMoviesAppTest {
             onNodeWithTag(TestTags.NAVIGATION_ICON_BACK).performClick()
 
             onNodeWithTag(TestTags.NAVIGATION_ICON_BACK).isNotDisplayed()
+        }
+    }
+
+    @Test
+    fun getMovieList_isCorrect() {
+        val trendingText = composeRule.activity.getString(R.string.trending_day)
+
+        with(composeRule) {
+            waitUntil(timeoutMillis = 5_000) {
+                onAllNodesWithText(trendingText).fetchSemanticsNodes().isNotEmpty()
+            }
+
+            onNodeWithText(trendingText).isDisplayed()
+
+            onNodeWithTag(TestTags.MY_MOVIE_LIST).performTouchInput { swipeUp() }
+
+            onNodeWithTag(TestTags.MY_MOVIE_LIST).performTouchInput { swipeDown() }
+
+            onNodeWithText(trendingText).isDisplayed()
         }
     }
 }

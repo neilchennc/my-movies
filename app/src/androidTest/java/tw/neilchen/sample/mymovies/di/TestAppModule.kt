@@ -10,12 +10,16 @@ import dagger.Provides
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.mockwebserver.MockWebServer
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import tw.neilchen.sample.mymovies.database.AppDatabase
 import tw.neilchen.sample.mymovies.database.SearchKeywordDao
+import tw.neilchen.sample.mymovies.dispatcher.MockServerDispatcher
 import tw.neilchen.sample.mymovies.network.AuthInterceptor
 import tw.neilchen.sample.mymovies.network.TmdbApiService
 import tw.neilchen.sample.mymovies.repository.AppDatabaseRepository
@@ -33,9 +37,13 @@ import javax.inject.Singleton
 )
 object TestAppModule {
 
-    private const val BASE_URL = "https://api.themoviedb.org/3/"
+    //private const val BASE_URL = "https://api.themoviedb.org/3/"
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("user")
+
+    private fun getBaseUrl(mockWebServer: MockWebServer) = runBlocking(Dispatchers.IO) {
+        mockWebServer.url("/")
+    }
 
     @Singleton
     @Provides
@@ -45,12 +53,21 @@ object TestAppModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        mockWebServer: MockWebServer
+    ): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(BASE_URL)
+            .baseUrl(getBaseUrl(mockWebServer))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMockWebServer(): MockWebServer {
+        return MockWebServer()
     }
 
     @Provides
