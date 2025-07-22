@@ -24,9 +24,9 @@ After that, add the following line into **local.properties** file, and replace w
 tmdb.access_token="YOUR_TMDB_ACCESS_TOKEN"
 ```
 
-> *Note: The local.properties file is created by Android Studio IDE when you open the project.*
+> *The local.properties file is created by Android Studio IDE when you open the project.*
 
-> *Recommended upgrading to the latest stable Android Studio and enabling K2 mode.*
+> *It is recommended to upgrade to the latest stable version of Android Studio and enable K2 mode.*
 
 ## Architecture
 
