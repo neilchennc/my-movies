@@ -6,11 +6,12 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 android {
     namespace = "tw.neilchen.sample.mymovies"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "tw.neilchen.sample.mymovies"
@@ -46,12 +47,8 @@ android {
     }
 }
 
-kotlin {
-    compilerOptions {
-        languageVersion = org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0
-        // Optional: Set jvmTarget
-        // jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
-    }
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {

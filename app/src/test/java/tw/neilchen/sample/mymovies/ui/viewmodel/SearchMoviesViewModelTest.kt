@@ -11,15 +11,11 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -31,8 +27,6 @@ import org.junit.Test
 import retrofit2.HttpException
 import retrofit2.Response
 import tw.neilchen.sample.mymovies.data.FakeData
-import tw.neilchen.sample.mymovies.data.Movie
-import tw.neilchen.sample.mymovies.data.MovieList
 import tw.neilchen.sample.mymovies.data.SearchKeyword
 import tw.neilchen.sample.mymovies.network.TmdbApiService
 import tw.neilchen.sample.mymovies.paging.MoviesPagingSource
@@ -123,17 +117,22 @@ class SearchMoviesViewModelTest {
 
         coEvery { databaseRepository.insertSearchKeyword(any()) } returns Unit
 
-        // FIXME: WTF cannot be mocked by MockK?
-        every { databaseRepository.getAllSearchKeywords() } returns flow {
-            emit(listOf(SearchKeyword(id = 0, keyword = keyword, addedAt = Date())))
-        }
+        every { databaseRepository.getAllSearchKeywords() } returns flowOf(
+            listOf(SearchKeyword(id = 0, keyword = keyword, addedAt = Date()))
+        )
+
+        // keywordsFlow reads getAllSearchKeywords() at construction, so recreate the
+        // ViewModel after stubbing it.
+        viewModel = SearchMoviesViewModel(moviesRepository, preferencesRepository, databaseRepository)
 
         viewModel.insertSearchKeyword(keyword)
 
         viewModel.keywordsFlow.test {
-            assertThat(awaitItem()).isEqualTo(keyword)
+            assertThat(awaitItem()).isEmpty() // StateFlow initial value
+            assertThat(awaitItem()).isEqualTo(listOf(keyword))
         }
 
-        coVerify { databaseRepository.insertSearchKeyword(any()) }
+        // insertSearchKeyword runs on Dispatchers.IO, so allow it time to complete.
+        coVerify(timeout = 1_000) { databaseRepository.insertSearchKeyword(any()) }
     }
 }
